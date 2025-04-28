@@ -21,7 +21,7 @@ namespace Bunq.Sdk.Json
         public BunqContractResolver(IReadOnlyCollection<Type> typesToExclude = null)
         {
             RegisterConverter(typeof(ApiEnvironmentType), new ApiEnvironmentTypeConverter());
-            RegisterConverter(typeof(Geolocation), new GeolocationConverter());
+            RegisterConverter(typeof(GeolocationObject), new GeolocationConverter());
             RegisterConverter(typeof(InstallationContext), new InstallationContextConverter());
             RegisterConverter(typeof(Installation), new InstallationConverter());
             RegisterConverter(typeof(MonetaryAccountReference), new MonetaryAccountReferenceConverter());
@@ -31,7 +31,7 @@ namespace Bunq.Sdk.Json
             RegisterConverter(typeof(float?), new NonIntegerNumberConverter());
             RegisterConverter(typeof(Pagination), new PaginationConverter());
             RegisterConverter(typeof(IAnchorObjectInterface), new AnchorObjectConverter());
-            RegisterConverter(typeof(BunqMeTabResultInquiry), new BunqMeTabResultInquiryConverter());
+            RegisterConverter(typeof(BunqMeTabResultInquiryApiObject), new BunqMeTabResultInquiryConverter());
 
             if (typesToExclude == null)
             {

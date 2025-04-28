@@ -30,7 +30,7 @@ namespace Bunq.Sdk.Json
             JsonSerializer serializer)
         {
             var jObject = JObject.Load(reader);
-            var labelMonetaryAccount = BunqJsonConvert.DeserializeObject<LabelMonetaryAccount>(jObject.ToString());
+            var labelMonetaryAccount = BunqJsonConvert.DeserializeObject<LabelMonetaryAccountObject>(jObject.ToString());
 
             return new MonetaryAccountReference(labelMonetaryAccount);
         }

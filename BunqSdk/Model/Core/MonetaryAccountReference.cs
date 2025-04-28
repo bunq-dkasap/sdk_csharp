@@ -8,15 +8,15 @@ namespace Bunq.Sdk.Model.Core
     /// </summary>
     public class MonetaryAccountReference
     {
-        public Pointer Pointer { get; private set; }
-        public LabelMonetaryAccount LabelMonetaryAccount { get; private set; }
+        public PointerObject Pointer { get; private set; }
+        public LabelMonetaryAccountObject LabelMonetaryAccount { get; private set; }
 
-        public MonetaryAccountReference(Pointer pointer)
+        public MonetaryAccountReference(PointerObject pointer)
         {
             Pointer = pointer;
         }
 
-        public MonetaryAccountReference(LabelMonetaryAccount labelMonetaryAccount)
+        public MonetaryAccountReference(LabelMonetaryAccountObject labelMonetaryAccount)
         {
             LabelMonetaryAccount = labelMonetaryAccount;
         }

@@ -41,16 +41,16 @@ namespace Bunq.Sdk.Context
         public int UserId { get; private set; }
 
         [JsonProperty(PropertyName = "user_person")]
-        public UserPerson UserPerson { get; private set; }
+        public UserPersonApiObject UserPerson { get; private set; }
 
         [JsonProperty(PropertyName = "user_company")]
-        public UserCompany UserCompany { get; private set; }
+        public UserCompanyApiObject UserCompany { get; private set; }
 
         [JsonProperty(PropertyName = "user_api_key")]
-        public UserApiKey UserApiKey { get; private set; }
+        public UserApiKeyApiObject UserApiKey { get; private set; }
 
         [JsonProperty(PropertyName = "user_payment_service_provider")]
-        public UserPaymentServiceProvider UserPaymentServiceProvider { get; private set; }
+        public UserPaymentServiceProviderApiObject UserPaymentServiceProvider { get; private set; }
 
         [JsonConstructor]
         private SessionContext()
@@ -67,21 +67,21 @@ namespace Bunq.Sdk.Context
 
         private void SetUser(BunqModel user)
         {
-            if (user.GetType() == typeof(UserPerson))
+            if (user.GetType() == typeof(UserPersonApiObject))
             {
-                UserPerson = (UserPerson) user;
+                UserPerson = (UserPersonApiObject) user;
             }
-            else if (user.GetType() == typeof(UserCompany))
+            else if (user.GetType() == typeof(UserCompanyApiObject))
             {
-                UserCompany = (UserCompany) user;
+                UserCompany = (UserCompanyApiObject) user;
             }
-            else if (user.GetType() == typeof(UserApiKey))
+            else if (user.GetType() == typeof(UserApiKeyApiObject))
             {
-                UserApiKey = (UserApiKey) user;
+                UserApiKey = (UserApiKeyApiObject) user;
             }
-            else if (user.GetType() == typeof(UserPaymentServiceProvider))
+            else if (user.GetType() == typeof(UserPaymentServiceProviderApiObject))
             {
-                UserPaymentServiceProvider = (UserPaymentServiceProvider) user;
+                UserPaymentServiceProvider = (UserPaymentServiceProviderApiObject) user;
             }
             else
             {
@@ -157,17 +157,17 @@ namespace Bunq.Sdk.Context
         {
             int? sessionTimeout;
 
-            if (user.GetType() == typeof(UserPerson))
+            if (user.GetType() == typeof(UserPersonApiObject))
             {
-                sessionTimeout = ((UserPerson) user).SessionTimeout;
+                sessionTimeout = ((UserPersonApiObject) user).SessionTimeout;
             }
-            else if (user.GetType() == typeof(UserCompany))
+            else if (user.GetType() == typeof(UserCompanyApiObject))
             {
-                sessionTimeout = ((UserCompany) user).SessionTimeout;
+                sessionTimeout = ((UserCompanyApiObject) user).SessionTimeout;
             }
-            else if (user.GetType() == typeof(UserPaymentServiceProvider))
+            else if (user.GetType() == typeof(UserPaymentServiceProviderApiObject))
             {
-                sessionTimeout = ((UserPaymentServiceProvider) user).SessionTimeout;
+                sessionTimeout = ((UserPaymentServiceProviderApiObject) user).SessionTimeout;
             }
             else
             {

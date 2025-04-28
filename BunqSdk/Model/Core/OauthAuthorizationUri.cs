@@ -49,7 +49,7 @@ namespace Bunq.Sdk.Model.Core
         public static OauthAuthorizationUri Create(
             OauthResponseType responseType,
             string redirectUri,
-            OauthClient client,
+            OauthClientApiObject client,
             string state = null
         )
         {

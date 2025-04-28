@@ -37,19 +37,19 @@ namespace Bunq.Sdk.Json
 
             if (userBody[FieldUserApiKey] != null)
             {
-                return new SessionServer(id, token, FetchObject<UserApiKey>(userBody, FieldUserApiKey));
+                return new SessionServer(id, token, FetchObject<UserApiKeyApiObject>(userBody, FieldUserApiKey));
             }
             else if (userBody[FieldUserCompany] != null)
             {
-                return new SessionServer(id, token, FetchObject<UserCompany>(userBody, FieldUserCompany));
+                return new SessionServer(id, token, FetchObject<UserCompanyApiObject>(userBody, FieldUserCompany));
             }
             else if (userBody[FieldUserPerson] != null)
             {
-                return new SessionServer(id, token, FetchObject<UserPerson>(userBody, FieldUserPerson));
+                return new SessionServer(id, token, FetchObject<UserPersonApiObject>(userBody, FieldUserPerson));
             }
             else if (userBody[FieldUserPaymentServiceProvider] != null)
             {
-                return new SessionServer(id, token, FetchObject<UserPaymentServiceProvider>(
+                return new SessionServer(id, token, FetchObject<UserPaymentServiceProviderApiObject>(
                     userBody,
                     FieldUserPaymentServiceProvider
                 ));

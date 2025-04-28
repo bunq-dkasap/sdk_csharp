@@ -7,14 +7,14 @@ using Bunq.Sdk.Model.Generated.Endpoint;
 
 namespace Bunq.Sdk.Model.Core
 {
-    public class PaymentServiceProviderCredentialInternal : PaymentServiceProviderCredential
+    public class PaymentServiceProviderCredentialInternal : PaymentServiceProviderCredentialApiObject
     {
         /// <summary>
         /// Object type.
         /// </summary>
         private const string OBJECT_TYPE_GET = "CredentialPasswordIp";
 
-        public static BunqResponse<PaymentServiceProviderCredential> CreateWithApiContext(
+        public static BunqResponse<PaymentServiceProviderCredentialApiObject> CreateWithApiContext(
             string clientPaymentServiceProviderCertificate,
             string clientPaymentServiceProviderCertificateChain, string clientPublicKeySignature,
             IDictionary<string, string> customHeaders, ApiContext apiContext)
@@ -33,7 +33,7 @@ namespace Bunq.Sdk.Model.Core
             var requestBytes = Encoding.UTF8.GetBytes(BunqJsonConvert.SerializeObject(requestMap));
             var responseRaw = apiClient.Post(ENDPOINT_URL_CREATE, requestBytes, customHeaders);
 
-            return FromJson<PaymentServiceProviderCredential>(responseRaw, OBJECT_TYPE_GET);
+            return FromJson<PaymentServiceProviderCredentialApiObject>(responseRaw, OBJECT_TYPE_GET);
         }
     }
 }

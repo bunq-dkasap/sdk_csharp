@@ -30,7 +30,7 @@ namespace Bunq.Sdk.Json
         {
             JObject jsonObject = JObject.Load(reader);
 
-            BunqMeTabResultInquiry tabResultInquiry = JsonConvert.DeserializeObject<BunqMeTabResultInquiry>(
+            BunqMeTabResultInquiryApiObject tabResultInquiry = JsonConvert.DeserializeObject<BunqMeTabResultInquiryApiObject>(
                 jsonObject.ToString(),
                 GetSerializerSettingsWithoutTabResultInquiryResolver()
             );
@@ -38,7 +38,7 @@ namespace Bunq.Sdk.Json
             JObject paymentJsonObjectWrapped = (JObject) jsonObject.GetValue(FIELD_PAYMENT);
             JObject paymentJsonObject = (JObject) paymentJsonObjectWrapped.GetValue(OBJECT_TYPE_PAYMENT);
 
-            Payment paymentObject = Payment.CreateFromJsonString(paymentJsonObject.ToString());
+            PaymentApiObject paymentObject = PaymentApiObject.CreateFromJsonString(paymentJsonObject.ToString());
             tabResultInquiry.Payment = paymentObject;
 
             return tabResultInquiry;

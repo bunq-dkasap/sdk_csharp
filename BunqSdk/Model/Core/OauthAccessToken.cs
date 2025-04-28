@@ -70,7 +70,7 @@ namespace Bunq.Sdk.Model.Core
             OauthGrantType grantType,
             string authCode,
             string redirectUri,
-            OauthClient client
+            OauthClientApiObject client
         )
         {
             HttpClient apiClient = new HttpClient();
@@ -89,7 +89,7 @@ namespace Bunq.Sdk.Model.Core
             OauthGrantType grantType,
             string authCode,
             string redirectUri,
-            OauthClient client
+            OauthClientApiObject client
         )
         {
             Dictionary<string, string> allTokenParameter = new Dictionary<string, string>()

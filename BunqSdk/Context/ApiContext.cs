@@ -172,9 +172,9 @@ namespace Bunq.Sdk.Context
         {
             return new Dictionary<string, object>
             {
-                {DeviceServer.FIELD_DESCRIPTION, description},
-                {DeviceServer.FIELD_SECRET, ApiKey},
-                {DeviceServer.FIELD_PERMITTED_IPS, permittedIps}
+                {DeviceServerApiObject.FIELD_DESCRIPTION, description},
+                {DeviceServerApiObject.FIELD_SECRET, ApiKey},
+                {DeviceServerApiObject.FIELD_PERMITTED_IPS, permittedIps}
             };
         }
 
@@ -211,7 +211,7 @@ namespace Bunq.Sdk.Context
 
         private void DeleteSession()
         {
-            Session.Delete(SESSION_ID_DUMMY);
+            SessionApiObject.Delete(SESSION_ID_DUMMY);
         }
 
         /// <summary>

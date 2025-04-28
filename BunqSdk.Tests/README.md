@@ -31,7 +31,7 @@ To run the tests, you must first generate a `key.pem` and a `credentials.pfx`.
 Navigate to the `/Resources` directory and execute the following the commands:
 
 ```
- openssl req -x509 -newkey rsa:4096 -keyout key.pem -out chain.cert -days 365 -nodes -subj '/CN=My Test App PISP AISP/C=NL
+ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out chain.cert -days 365 -nodes -subj '/CN=testtghjdvbghjvba/C=NL'
  openssl pkcs12 -inkey key.pem -in chain.cert -export -out credentials.pfx 
 ```
 

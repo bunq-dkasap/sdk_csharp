@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Bunq.Sdk.Context;
@@ -63,6 +64,14 @@ namespace Bunq.Sdk.Model.Core
         }
 
         /// <summary>
+        /// Safely checks if a JObject has a property and returns it as a string or null.
+        /// </summary>
+        private static string TryGetPropertyAsString(JObject json, string propertyName)
+        {
+            return json.TryGetValue(propertyName, out var value) ? value.ToString() : null;
+        }
+
+        /// <summary>
         /// De-serializes an UUID object and returns its string value.
         /// </summary>
         protected static BunqResponse<string> ProcessForUuid(BunqResponseRaw responseRaw)
@@ -75,17 +84,45 @@ namespace Bunq.Sdk.Model.Core
         }
 
         /// <summary>
-        /// De-serialize an object from JSON.
+        /// De-serialize an object from JSON, with support for dynamic subtypes.
         /// </summary>
         protected static BunqResponse<T> FromJson<T>(BunqResponseRaw responseRaw, string wrapper)
         {
             var responseItemObject = GetResponseItemObject(responseRaw);
+            
+            // First, try to get the direct wrapper
+            var directWrapperJson = TryGetPropertyAsString(responseItemObject, wrapper);
+            
+            if (directWrapperJson != null)
+            {
+                // Standard case - wrapper exists directly
+                var responseValue = BunqJsonConvert.DeserializeObject<T>(directWrapperJson);
+                return new BunqResponse<T>(responseValue, responseRaw.Headers);
+            }
+            
+            // Look for dynamic subtypes like CardDebit or MonetaryAccountBank
+            // that start with the wrapper name
+            foreach (var property in responseItemObject.Properties())
+            {
+                if (property.Name.StartsWith(wrapper, StringComparison.OrdinalIgnoreCase))
+                {
+                    // Found a subtype - use it
+                    var subtypeJson = property.Value.ToString();
+                    var responseValue = BunqJsonConvert.DeserializeObject<T>(subtypeJson);
+                    return new BunqResponse<T>(responseValue, responseRaw.Headers);
+                }
+            }
+            
+            // Fallback - try the original method if nothing was found
+            // This may throw, but that's consistent with the original implementation
             var unwrappedItemJsonString = GetUnwrappedItemJsonString(responseItemObject, wrapper);
-            var responseValue = BunqJsonConvert.DeserializeObject<T>(unwrappedItemJsonString);
-
-            return new BunqResponse<T>(responseValue, responseRaw.Headers);
+            var fallbackResponseValue = BunqJsonConvert.DeserializeObject<T>(unwrappedItemJsonString);
+            return new BunqResponse<T>(fallbackResponseValue, responseRaw.Headers);
         }
 
+        /// <summary>
+        /// De-serialize an object from JSON without a wrapper.
+        /// </summary>
         protected static BunqResponse<T> FromJson<T>(BunqResponseRaw responseRaw)
         {
             var responseItemObject = GetResponseItemObject(responseRaw);
@@ -102,19 +139,55 @@ namespace Bunq.Sdk.Model.Core
         }
 
         /// <summary>
-        /// De-serializes a list from JSON.
+        /// De-serializes a list from JSON with support for dynamic subtypes.
         /// </summary>
         protected static BunqResponse<List<T>> FromJsonList<T>(BunqResponseRaw responseRaw, string wrapper)
         {
             var responseObject = DeserializeResponseObject(responseRaw);
-            var responseValue = responseObject
-                .GetValue(FIELD_RESPONSE).ToObject<JArray>()
-                .Select(unwrappedItemObject =>
-                    GetUnwrappedItemJsonString(unwrappedItemObject.ToObject<JObject>(), wrapper))
-                .Select(BunqJsonConvert.DeserializeObject<T>)
-                .ToList();
+            var responseArray = responseObject.GetValue(FIELD_RESPONSE).ToObject<JArray>();
+            var responseValue = new List<T>();
+            
+            foreach (var item in responseArray)
+            {
+                var itemObject = item.ToObject<JObject>();
+                
+                // First try direct wrapper
+                var directWrapperJson = TryGetPropertyAsString(itemObject, wrapper);
+                
+                if (directWrapperJson != null)
+                {
+                    // Standard case
+                    var itemValue = BunqJsonConvert.DeserializeObject<T>(directWrapperJson);
+                    responseValue.Add(itemValue);
+                    continue;
+                }
+                
+                // Look for dynamic subtypes
+                bool foundSubtype = false;
+                
+                foreach (var property in itemObject.Properties())
+                {
+                    if (property.Name.StartsWith(wrapper, StringComparison.OrdinalIgnoreCase))
+                    {
+                        // Found a subtype
+                        var subtypeJson = property.Value.ToString();
+                        var itemValue = BunqJsonConvert.DeserializeObject<T>(subtypeJson);
+                        responseValue.Add(itemValue);
+                        foundSubtype = true;
+                        break;
+                    }
+                }
+                
+                if (!foundSubtype)
+                {
+                    // Fallback - use the original method
+                    var unwrappedItemJsonString = GetUnwrappedItemJsonString(itemObject, wrapper);
+                    var itemValue = BunqJsonConvert.DeserializeObject<T>(unwrappedItemJsonString);
+                    responseValue.Add(itemValue);
+                }
+            }
+            
             var pagination = DeserializePagination(responseObject);
-
             return new BunqResponse<List<T>>(responseValue, responseRaw.Headers, pagination);
         }
 

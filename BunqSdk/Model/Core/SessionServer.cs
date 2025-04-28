@@ -27,33 +27,33 @@ namespace Bunq.Sdk.Model.Core
 
         public Id Id { get; private set; }
         public SessionToken SessionToken { get; private set; }
-        public UserApiKey UserApiKey { get; private set; }
-        public UserCompany UserCompany { get; private set; }
-        public UserPerson UserPerson { get; private set; }
-        public UserPaymentServiceProvider UserPaymentServiceProvider { get; private set; }
+        public UserApiKeyApiObject UserApiKey { get; private set; }
+        public UserCompanyApiObject UserCompany { get; private set; }
+        public UserPersonApiObject UserPerson { get; private set; }
+        public UserPaymentServiceProviderApiObject UserPaymentServiceProvider { get; private set; }
 
-        public SessionServer(Id id, SessionToken sessionToken, UserCompany userCompany)
+        public SessionServer(Id id, SessionToken sessionToken, UserCompanyApiObject userCompany)
         {
             Id = id;
             SessionToken = sessionToken;
             UserCompany = userCompany;
         }
 
-        public SessionServer(Id id, SessionToken sessionToken, UserPerson userPerson)
+        public SessionServer(Id id, SessionToken sessionToken, UserPersonApiObject userPerson)
         {
             Id = id;
             SessionToken = sessionToken;
             UserPerson = userPerson;
         }
 
-        public SessionServer(Id id, SessionToken sessionToken, UserApiKey userApiKey)
+        public SessionServer(Id id, SessionToken sessionToken, UserApiKeyApiObject userApiKey)
         {
             Id = id;
             SessionToken = sessionToken;
             UserApiKey = userApiKey;
         }
 
-        public SessionServer(Id id, SessionToken sessionToken, UserPaymentServiceProvider userPaymentServiceProvider)
+        public SessionServer(Id id, SessionToken sessionToken, UserPaymentServiceProviderApiObject userPaymentServiceProvider)
         {
             Id = id;
             SessionToken = sessionToken;

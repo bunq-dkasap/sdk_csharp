@@ -17,7 +17,7 @@ namespace Bunq.Sdk.Json
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var geolocation = (Geolocation) value;
+            var geolocation = (GeolocationObject) value;
 
             writer.WriteStartObject();
 
@@ -49,7 +49,7 @@ namespace Bunq.Sdk.Json
 
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(Geolocation);
+            return objectType == typeof(GeolocationObject);
         }
     }
 }

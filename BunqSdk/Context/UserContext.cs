@@ -16,14 +16,14 @@ namespace Bunq.Sdk.Context
         private const string ErrorPirmaryMonetaryAccountHasNotBeenLoaded =
             "Pirmary monetary account has not been loaded.";
         private const string MonetaryAccountStatusActive = "ACTIVE";
-        private MonetaryAccountBank primaryMonetaryAccountBank;
+        private MonetaryAccountBankApiObject primaryMonetaryAccountBank;
 
-        public UserPerson UserPerson { get; private set; }
-        public UserCompany UserCompany { get; private set; }
-        public UserApiKey UserApiKey { get; private set; }
-        public UserPaymentServiceProvider UserPaymentServiceProvider { get; private set; }
+        public UserPersonApiObject UserPerson { get; private set; }
+        public UserCompanyApiObject UserCompany { get; private set; }
+        public UserApiKeyApiObject UserApiKey { get; private set; }
+        public UserPaymentServiceProviderApiObject UserPaymentServiceProvider { get; private set; }
 
-        public MonetaryAccountBank PrimaryMonetaryAccountBank
+        public MonetaryAccountBankApiObject PrimaryMonetaryAccountBank
         {
             get => primaryMonetaryAccountBank ?? throw new BunqException(ErrorPirmaryMonetaryAccountHasNotBeenLoaded);
             private set => primaryMonetaryAccountBank = value ?? throw new ArgumentNullException(nameof(value));
@@ -39,26 +39,26 @@ namespace Bunq.Sdk.Context
 
         private static BunqModel GetUserObject()
         {
-            return User.List().Value.First().GetReferencedObject();
+            return UserApiObject.List().Value.First().GetReferencedObject();
         }
 
         private void SetUser(BunqModel user)
         {
-            if (user.GetType() == typeof(UserPerson))
+            if (user.GetType() == typeof(UserPersonApiObject))
             {
-                this.UserPerson = (UserPerson) user;
+                this.UserPerson = (UserPersonApiObject) user;
             }
-            else if (user.GetType() == typeof(UserCompany))
+            else if (user.GetType() == typeof(UserCompanyApiObject))
             {
-                this.UserCompany = (UserCompany) user;
+                this.UserCompany = (UserCompanyApiObject) user;
             }
-            else if (user.GetType() == typeof(UserApiKey))
+            else if (user.GetType() == typeof(UserApiKeyApiObject))
             {
-                this.UserApiKey = (UserApiKey) user;
+                this.UserApiKey = (UserApiKeyApiObject) user;
             }
-            else if (user.GetType() == typeof(UserPaymentServiceProvider))
+            else if (user.GetType() == typeof(UserPaymentServiceProviderApiObject))
             {
-                this.UserPaymentServiceProvider = (UserPaymentServiceProvider) user;
+                this.UserPaymentServiceProvider = (UserPaymentServiceProviderApiObject) user;
             }
             else
             {
@@ -73,7 +73,7 @@ namespace Bunq.Sdk.Context
                 return;
             }
 
-            var allMonetaryAccount = MonetaryAccountBank.List().Value;
+            var allMonetaryAccount = MonetaryAccountBankApiObject.List().Value;
 
             foreach (var accountBank in allMonetaryAccount)
             {

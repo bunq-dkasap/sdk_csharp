@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Text;
 using Bunq.Sdk.Http;
@@ -8,7 +7,7 @@ using Bunq.Sdk.Model.Generated.Object;
 
 namespace Bunq.Sdk.Model.Core
 {
-    public class NotificationFilterPushUserInternal : NotificationFilterPushUser
+    public class NotificationFilterPushUserInternal : NotificationFilterPushApiObject
     {
         /// <summary>
         /// Field constants.
@@ -18,16 +17,16 @@ namespace Bunq.Sdk.Model.Core
         /// <summary>
         /// Create notification filters with list response type.
         /// </summary>
-        public static BunqResponse<List<NotificationFilterPush>> CreateWithListResponse()
+        public static BunqResponse<List<NotificationFilterPushObject>> CreateWithListResponse()
         {
-            return CreateWithListResponse(new List<NotificationFilterPush>(), null);
+            return CreateWithListResponse(new List<NotificationFilterPushObject>(), null);
         }
 
         /// <summary>
         /// Create notification filters with list response type.
         /// </summary>
-        public static BunqResponse<List<NotificationFilterPush>> CreateWithListResponse(
-            List<NotificationFilterPush> allNotificationFilter
+        public static BunqResponse<List<NotificationFilterPushObject>> CreateWithListResponse(
+            List<NotificationFilterPushObject> allNotificationFilter
         )
         {
             return CreateWithListResponse(allNotificationFilter, null);
@@ -36,8 +35,8 @@ namespace Bunq.Sdk.Model.Core
         /// <summary>
         /// Create notification filters with list response type.
         /// </summary>
-        public static BunqResponse<List<NotificationFilterPush>> CreateWithListResponse(
-            List<NotificationFilterPush> allNotificationFilter,
+        public static BunqResponse<List<NotificationFilterPushObject>> CreateWithListResponse(
+            List<NotificationFilterPushObject> allNotificationFilter,
             Dictionary<string, string> customHeaders
         )
         {
@@ -57,7 +56,7 @@ namespace Bunq.Sdk.Model.Core
                 requestBytes,
                 customHeaders);
 
-            return FromJsonList<NotificationFilterPush>(responseRaw, OBJECT_TYPE_GET);
+            return FromJsonList<NotificationFilterPushObject>(responseRaw, OBJECT_TYPE_GET);
         }
     }
 }

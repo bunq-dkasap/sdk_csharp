@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
@@ -68,7 +69,7 @@ namespace Bunq.Sdk.Tests
         private const string SpendingMoneyAmount = "50.00";
         private const string SpendingMoneyRequestDescription = "sdk c# test, thanks daddy.";
 
-        protected static MonetaryAccountBank SecondMonetaryAccountBank;
+        protected static MonetaryAccountBankApiObject SecondMonetaryAccountBank;
 
         /// <summary>
         /// Gets an Api Context, re-creates if needed and returns it.
@@ -78,7 +79,7 @@ namespace Bunq.Sdk.Tests
             SetUpApiContext();
             SecondMonetaryAccountBank = SetUpSecondMonetaryAccount();
             RequestSpendingMoney();
-            Thread.Sleep(500); // ensure requests are auto accepted.
+            Thread.Sleep(2000); // ensure requests are auto accepted.
             BunqContext.UserContext.RefreshUserContext();
         }
 
@@ -102,7 +103,7 @@ namespace Bunq.Sdk.Tests
             return apiContext;
         }
 
-        private static SandboxUserPerson GenerateNewSandboxUserPerson()
+        private static SandboxUserPersonApiObject GenerateNewSandboxUserPerson()
         {
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("X-Bunq-Client-Request-Id", "unique");
@@ -118,42 +119,42 @@ namespace Bunq.Sdk.Tests
             var responseString = requestTask.Result.Content.ReadAsStringAsync().Result;
             var responseJson = BunqJsonConvert.DeserializeObject<JObject>(responseString);
 
-            return BunqJsonConvert.DeserializeObject<SandboxUserPerson>(
+            return BunqJsonConvert.DeserializeObject<SandboxUserPersonApiObject>(
                 responseJson.First.First.First.First.First.ToString()
             );
         }
 
-        private static MonetaryAccountBank SetUpSecondMonetaryAccount()
+        private static MonetaryAccountBankApiObject SetUpSecondMonetaryAccount()
         {
-            var createdMonetaryAccountId = MonetaryAccountBank.Create(PaymentCurrency, MonetaryAccountDescription);
+            var createdMonetaryAccountId = MonetaryAccountBankApiObject.Create(PaymentCurrency, MonetaryAccountDescription);
 
-            return MonetaryAccountBank.Get(createdMonetaryAccountId.Value).Value;
+            return MonetaryAccountBankApiObject.Get(createdMonetaryAccountId.Value).Value;
         }
 
         private static void RequestSpendingMoney()
         {
-            RequestInquiry.Create(
-                new Amount(SpendingMoneyAmount, PaymentCurrency),
-                new Pointer(PointerTypeEmail, EmailSuggarDaddy),
+            RequestInquiryApiObject.Create(
+                new AmountObject(SpendingMoneyAmount, PaymentCurrency),
+                new PointerObject(PointerTypeEmail, EmailSuggarDaddy),
                 SpendingMoneyRequestDescription,
                 false
             );
 
-            RequestInquiry.Create(
-                new Amount(SpendingMoneyAmount, PaymentCurrency),
-                new Pointer(PointerTypeEmail, EmailSuggarDaddy),
+            RequestInquiryApiObject.Create(
+                new AmountObject(SpendingMoneyAmount, PaymentCurrency),
+                new PointerObject(PointerTypeEmail, EmailSuggarDaddy),
                 SpendingMoneyRequestDescription,
                 false,
                 SecondMonetaryAccountBank.Id
             );
         }
 
-        protected static Pointer GetPointerBravo()
+        protected static PointerObject GetPointerBravo()
         {
-            return new Pointer(PointerTypeEmail, EmailBravo);
+            return new PointerObject(PointerTypeEmail, EmailBravo);
         }
 
-        protected static Pointer GetAlias()
+        protected static PointerObject GetAlias()
         {
             var userContext = BunqContext.UserContext;
 

@@ -2,8 +2,8 @@
   <PropertyGroup>
     <RootNamespace>Bunq.Sdk.Tests</RootNamespace>
     <LangVersion>default</LangVersion>
-    <AssemblyName>BunqSdk.Tests.xunit.runner.json</AssemblyName>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AssemblyName>BunqSdk.Tests</AssemblyName>
+    <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\BunqSdk\BunqSdk.csproj" />
@@ -26,7 +26,6 @@
     <Folder Include="Resources\NotificationUrlJsons" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Resources\chain.cert" />
     <None Remove="Resources\bunq-psd2-test.conf" />
   </ItemGroup>
 </Project>

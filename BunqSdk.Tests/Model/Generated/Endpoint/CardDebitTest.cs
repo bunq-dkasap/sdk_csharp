@@ -22,8 +22,8 @@ namespace Bunq.Sdk.Tests.Model.Generated.Endpoint
         private const string PinCode = "4045";
         private const int NonnegativeIntegerMinimum = 0;
         private const int CardSecondLineLengthMaximum = 20;
-        private const string CardTypeMaestro = "MAESTRO";
-        private const string ProductTypeMaestroDebit = "MAESTRO_DEBIT";
+        private const string CardTypeMastercard = "MASTERCARD";
+        private const string ProductTypeMastercardDebit = "MASTERCARD_DEBIT";
 
         /// <summary>
         /// Number constants.
@@ -35,30 +35,31 @@ namespace Bunq.Sdk.Tests.Model.Generated.Endpoint
         /// Tests ordering a new card and checks if the fields we have entered are indeed correct by.
         /// </summary>
         [Fact]
-        public void TestOrderNewMaestroCard()
+        public void TestOrderNewMastercardCard()
         {
             SetUpTestCase();
 
-            var cardPinAssignment = new CardPinAssignment(
+            var cardPinAssignment = new CardPinAssignmentObject(
                 CardPinAssignmentTypePrimary
             )
             {
                 PinCode = PinCode,
                 MonetaryAccountId = BunqContext.UserContext.PrimaryMonetaryAccountBank.Id
             };
-            var allCardPinAssignments = new List<CardPinAssignment> {cardPinAssignment};
-            var cardDebit = CardDebit.Create(
+            var allCardPinAssignments = new List<CardPinAssignmentObject> {cardPinAssignment};
+            var cardDebit = CardDebitApiObject.Create(
                 GenerateRandomSecondLine(),
                 GetAnAllowedName(),
-                CardTypeMaestro,
+                CardTypeMastercard,
+                ProductTypeMastercardDebit,
+                GetAnAllowedName(),
                 GetAlias(),
-                ProductTypeMaestroDebit,
                 allCardPinAssignments
             ).Value;
 
             Assert.True(cardDebit.Id != null);
 
-            var cardFromCardEndpoint = Card.Get(cardDebit.Id.Value).Value;
+            var cardFromCardEndpoint = CardApiObject.Get(cardDebit.Id.Value).Value;
 
             Assert.Equal(cardDebit.SecondLine, cardFromCardEndpoint.SecondLine);
             Assert.Equal(cardDebit.Created, cardFromCardEndpoint.Created);
@@ -67,7 +68,7 @@ namespace Bunq.Sdk.Tests.Model.Generated.Endpoint
 
         private static string GetAnAllowedName()
         {
-            return CardName.List().Value.First().PossibleCardNameArray.First();
+            return CardNameApiObject.List().Value.First().PossibleCardNameArray.First();
         }
 
         private static string GenerateRandomSecondLine()

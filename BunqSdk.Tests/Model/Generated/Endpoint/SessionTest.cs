@@ -25,7 +25,7 @@ namespace Bunq.Sdk.Tests.Model.Generated.Endpoint
         {
             SetUpTestCase();
 
-            Session.Delete(SessionIdDummy);
+            SessionApiObject.Delete(SessionIdDummy);
 
             File.Delete(FilenameContextConf);
         }

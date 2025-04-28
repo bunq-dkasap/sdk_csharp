@@ -10,7 +10,7 @@ using Xunit;
 namespace Bunq.Sdk.Tests.Context
 {
     [TestCaseOrderer("Bunq.Sdk.Tests.Util.TestPriorityOrderer", "Psd2ApiContextTest")]
-    public class Psd2ApiContextTest : IClassFixture<Psd2ApiContextTest>
+    public class Psd2ApiContextTest: BunqSdkTestBase, IClassFixture<Psd2ApiContextTest>
     {
         /// <summary>
         /// File constants.
@@ -48,13 +48,15 @@ namespace Bunq.Sdk.Tests.Context
         [Fact, TestPriority(0)]
         public void TestCreateOauthClient()
         {
+            SetUpApiContext();
+            
             if (File.Exists(FILE_TEST_OAUTH))
             {
                 return;
             }
 
-            int clientId = OauthClient.Create().Value;
-            OauthClient oauthClient = OauthClient.Get(clientId).Value;
+            int clientId = OauthClientApiObject.Create().Value;
+            OauthClientApiObject oauthClient = OauthClientApiObject.Get(clientId).Value;
             Assert.NotNull(oauthClient);
 
             File.WriteAllText(

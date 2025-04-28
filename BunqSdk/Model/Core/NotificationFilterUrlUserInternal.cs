@@ -8,7 +8,7 @@ using Bunq.Sdk.Model.Generated.Object;
 
 namespace Bunq.Sdk.Model.Core
 {
-    public class NotificationFilterUrlUserInternal : NotificationFilterUrlUser
+    public class NotificationFilterUrlUserInternal : NotificationFilterUrlApiObject
     {
         /// <summary>
         /// Field constants.
@@ -18,16 +18,16 @@ namespace Bunq.Sdk.Model.Core
         /// <summary>
         /// Create notification filters with list response type.
         /// </summary>
-        public static BunqResponse<List<NotificationFilterUrl>> CreateWithListResponse()
+        public static BunqResponse<List<NotificationFilterUrlObject>> CreateWithListResponse()
         {
-            return CreateWithListResponse(new List<NotificationFilterUrl>(), null);
+            return CreateWithListResponse(new List<NotificationFilterUrlObject>(), null);
         }
 
         /// <summary>
         /// Create notification filters with list response type.
         /// </summary>
-        public static BunqResponse<List<NotificationFilterUrl>> CreateWithListResponse(
-            List<NotificationFilterUrl> allNotificationFilter
+        public static BunqResponse<List<NotificationFilterUrlObject>> CreateWithListResponse(
+            List<NotificationFilterUrlObject> allNotificationFilter
         )
         {
             return CreateWithListResponse(allNotificationFilter, null);
@@ -36,8 +36,8 @@ namespace Bunq.Sdk.Model.Core
         /// <summary>
         /// Create notification filters with list response type.
         /// </summary>
-        public static BunqResponse<List<NotificationFilterUrl>> CreateWithListResponse(
-            List<NotificationFilterUrl> allNotificationFilter,
+        public static BunqResponse<List<NotificationFilterUrlObject>> CreateWithListResponse(
+            List<NotificationFilterUrlObject> allNotificationFilter,
             Dictionary<string, string> customHeaders
         ) {
             ApiClient apiClient = new ApiClient(GetApiContext());
@@ -54,7 +54,7 @@ namespace Bunq.Sdk.Model.Core
             var responseRaw = apiClient.Post(string.Format(ENDPOINT_URL_CREATE, DetermineUserId()), requestBytes,
                 customHeaders);
 
-            return FromJsonList<NotificationFilterUrl>(responseRaw, OBJECT_TYPE_GET);
+            return FromJsonList<NotificationFilterUrlObject>(responseRaw, OBJECT_TYPE_GET);
         }
     }
 }

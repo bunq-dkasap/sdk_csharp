@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Bunq.Sdk.Model.Generated.Endpoint;
 using Bunq.Sdk.Model.Generated.Object;
 using Xunit;
@@ -25,8 +26,8 @@ namespace Bunq.Sdk.Tests.Model.Generated.Endpoint
         {
             SetUpTestCase();
 
-            RequestInquiry.Create(
-                new Amount(PaymentAmountEur, PaymentCurrency),
+            RequestInquiryApiObject.Create(
+                new AmountObject(PaymentAmountEur, PaymentCurrency),
                 SecondMonetaryAccountBank.Alias.First(),
                 PaymentDescription,
                 false
@@ -37,9 +38,11 @@ namespace Bunq.Sdk.Tests.Model.Generated.Endpoint
 
         private static string AcceptRequest()
         {
-            var requestResponseId = RequestResponse.List(SecondMonetaryAccountBank.Id.Value).Value.First().Id.Value;
+            var urlParams = new Dictionary<string, string>();
+            urlParams["status"] = "PENDING";
+            var requestResponseId = RequestResponseApiObject.List(SecondMonetaryAccountBank.Id.Value, urlParams).Value.First().Id.Value;
 
-            return RequestResponse.Update(
+            return RequestResponseApiObject.Update(
                 requestResponseId,
                 status: Status,
                 monetaryAccountId: SecondMonetaryAccountBank.Id.Value

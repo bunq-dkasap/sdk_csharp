@@ -34,27 +34,21 @@ namespace Bunq.Sdk.Tests
         private const string FIELD_COUNTER_ALIAS = "Alias";
         private const string FIELD_COUNTER_TYPE = "Type";
         private const string FIELD_TAB_USAGE_SINGLE = "TabUsageSingleTest";
-        private const string FIELD_CASH_REGISTER_ID = "CASH_REGISTER_ID";
-
-        public static int GetCashRegisterId()
-        {
-            return GetConfig()[FIELD_TAB_USAGE_SINGLE][FIELD_CASH_REGISTER_ID].ToObject<int>();
-        }
-
-        public static Pointer GetCounterPartyAliasOther()
+        
+        public static PointerObject GetCounterPartyAliasOther()
         {
             var alias = GetConfig()[FIELD_COUNTER_PARTY_OTHER][FIELD_COUNTER_ALIAS].ToString();
             var type = GetConfig()[FIELD_COUNTER_PARTY_OTHER][FIELD_COUNTER_TYPE].ToString();
 
-            return new Pointer(type, alias);
+            return new PointerObject(type, alias);
         }
 
-        public static Pointer GetCounterPartyAliasSelf()
+        public static PointerObject GetCounterPartyAliasSelf()
         {
             var alias = GetConfig()[FIELD_COUNTER_PARTY_SELF][FIELD_COUNTER_ALIAS].ToString();
             var type = GetConfig()[FIELD_COUNTER_PARTY_SELF][FIELD_COUNTER_TYPE].ToString();
 
-            return new Pointer(type, alias);
+            return new PointerObject(type, alias);
         }
 
         public static int GetSecondMonetaryAccountId()
