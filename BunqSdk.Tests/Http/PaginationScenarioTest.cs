@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Threading;
 using Bunq.Sdk.Http;
 using Bunq.Sdk.Json;
@@ -35,14 +33,14 @@ namespace Bunq.Sdk.Tests.Http
                 Count = PaymentListingPageSize
             };
             
-            Thread.Sleep(1000); 
+            Thread.Sleep(1000); // Ensure request won't get rate limited.
             var responseLatest = ListPayments(paginationCountOnly.UrlParamsCountOnly);
             
-            Thread.Sleep(1000);
+            Thread.Sleep(1000); // Ensure request won't get rate limited.
             var paginationLatest = responseLatest.Pagination;
             var responsePrevious = ListPayments(paginationLatest.UrlParamsPreviousPage);
             
-            Thread.Sleep(1000);
+            Thread.Sleep(1000); // Ensure request won't get rate limited.
             var paginationPrevious = responsePrevious.Pagination;
             var responsePreviousNext = ListPayments(paginationPrevious.UrlParamsNextPage);
 

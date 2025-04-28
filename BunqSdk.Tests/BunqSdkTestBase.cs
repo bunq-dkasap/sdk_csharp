@@ -78,7 +78,7 @@ namespace Bunq.Sdk.Tests
             SetUpApiContext();
             SecondMonetaryAccountBank = SetUpSecondMonetaryAccount();
             RequestSpendingMoney();
-            Thread.Sleep(1000);
+            Thread.Sleep(1000); // Ensure requests are auto accepted.
             BunqContext.UserContext.RefreshUserContext();
         }
 

@@ -10,7 +10,7 @@ using Xunit;
 namespace Bunq.Sdk.Tests.Context
 {
     [TestCaseOrderer("Bunq.Sdk.Tests.Util.TestPriorityOrderer", "Psd2ApiContextTest")]
-    public class Psd2ApiContextTest: BunqSdkTestBase, IClassFixture<Psd2ApiContextTest>
+    public class Psd2ApiContextTest : BunqSdkTestBase, IClassFixture<Psd2ApiContextTest>
     {
         /// <summary>
         /// File constants.

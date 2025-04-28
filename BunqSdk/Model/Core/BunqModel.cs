@@ -173,6 +173,7 @@ namespace Bunq.Sdk.Model.Core
             }
             
             var pagination = DeserializePagination(responseObject);
+            
             return new BunqResponse<List<T>>(responseValue, responseRaw.Headers, pagination);
         }
 

@@ -104,9 +104,9 @@ namespace Bunq.Sdk.Json
                 return exactMatch;
 
             return properties.FirstOrDefault(p =>
-                jsonPropertyName.Contains(p.Name, StringComparison.OrdinalIgnoreCase) ||
-                p.Name.Contains(jsonPropertyName, StringComparison.OrdinalIgnoreCase));
-        }
+                jsonPropertyName.IndexOf(p.Name, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                p.Name.IndexOf(jsonPropertyName, StringComparison.OrdinalIgnoreCase) >= 0);
+        }   
 
         public override bool CanConvert(Type objectType)
         {

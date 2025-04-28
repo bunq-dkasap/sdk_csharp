@@ -64,7 +64,6 @@ namespace Bunq.Sdk.Tests.Model.Generated.Object
             var model = notificationUrl.Object.GetType()
                 .GetProperty(referencedObjectPropertyName)
                 .GetValue(notificationUrl.Object);
-            var sda = notificationUrl.Object;
             var referencedModel = notificationUrl.Object.GetReferencedObject();
 
             Assert.NotNull(model);
