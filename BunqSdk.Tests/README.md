@@ -31,8 +31,8 @@ To run the tests, you must first generate a `key.pem` and a `credentials.pfx`.
 Navigate to the `/Resources` directory and execute the following the commands:
 
 ```
- openssl req -x509 -newkey rsa:4096 -keyout key.pem -out chain.cert -days 365 -nodes -subj '/CN=testtghjdvbghjvba/C=NL'
- openssl pkcs12 -inkey key.pem -in chain.cert -export -out credentials.pfx 
+openssl req -x509 -newkey rsa:4096 -keyout BunqSdk.Tests/Resources/key.pem -out BunqSdk.Tests/Resources/chain.cert -days 365 -nodes -subj '/CN=testtghjdvbghjvbadsa/C=NL'
+openssl pkcs12 -inkey BunqSdk.Tests/Resources/key.pem -in BunqSdk.Tests/Resources/chain.cert -export -out BunqSdk.Tests/Resources/credentials.pfx -passout pass:secret 
 ```
 
 You will be requested to enter a passphrase. 

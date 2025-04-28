@@ -35,14 +35,14 @@ namespace Bunq.Sdk.Tests.Http
                 Count = PaymentListingPageSize
             };
             
-            Thread.Sleep(1000); // Time out to prevent rate limiting.
+            Thread.Sleep(1000); 
             var responseLatest = ListPayments(paginationCountOnly.UrlParamsCountOnly);
             
-            Thread.Sleep(1000); // Time out to prevent rate limiting.
+            Thread.Sleep(1000);
             var paginationLatest = responseLatest.Pagination;
             var responsePrevious = ListPayments(paginationLatest.UrlParamsPreviousPage);
             
-            Thread.Sleep(1000); // Time out to prevent rate limiting.
+            Thread.Sleep(1000);
             var paginationPrevious = responsePrevious.Pagination;
             var responsePreviousNext = ListPayments(paginationPrevious.UrlParamsNextPage);
 
@@ -59,6 +59,7 @@ namespace Bunq.Sdk.Tests.Http
         {
             for (var i = NumberZero; i < GetPaymentsMissingCount(); ++i)
             {
+                Thread.Sleep(1000); // Time out to prevent rate limiting.
                 CreatePayment();
             }
         }
