@@ -45,7 +45,6 @@ namespace Bunq.Sdk.Json
 
                         if (targetProperty != null) {
                             try {
-                                // Deserialize the value to the property type
                                 var propertyValue = JsonConvert.DeserializeObject(
                                     property.Value.ToString(),
                                     targetProperty.PropertyType,
@@ -96,7 +95,6 @@ namespace Bunq.Sdk.Json
             return instance;
         }
 
-        // Helper to find matching property
         private PropertyInfo FindMatchingProperty(PropertyInfo[] properties, string jsonPropertyName)
         {
             var exactMatch = properties.FirstOrDefault(p =>

@@ -90,39 +90,29 @@ namespace Bunq.Sdk.Model.Core
         {
             var responseItemObject = GetResponseItemObject(responseRaw);
             
-            // First, try to get the direct wrapper
             var directWrapperJson = TryGetPropertyAsString(responseItemObject, wrapper);
             
             if (directWrapperJson != null)
             {
-                // Standard case - wrapper exists directly
                 var responseValue = BunqJsonConvert.DeserializeObject<T>(directWrapperJson);
                 return new BunqResponse<T>(responseValue, responseRaw.Headers);
             }
             
-            // Look for dynamic subtypes like CardDebit or MonetaryAccountBank
-            // that start with the wrapper name
             foreach (var property in responseItemObject.Properties())
             {
                 if (property.Name.StartsWith(wrapper, StringComparison.OrdinalIgnoreCase))
                 {
-                    // Found a subtype - use it
                     var subtypeJson = property.Value.ToString();
                     var responseValue = BunqJsonConvert.DeserializeObject<T>(subtypeJson);
                     return new BunqResponse<T>(responseValue, responseRaw.Headers);
                 }
             }
             
-            // Fallback - try the original method if nothing was found
-            // This may throw, but that's consistent with the original implementation
             var unwrappedItemJsonString = GetUnwrappedItemJsonString(responseItemObject, wrapper);
             var fallbackResponseValue = BunqJsonConvert.DeserializeObject<T>(unwrappedItemJsonString);
             return new BunqResponse<T>(fallbackResponseValue, responseRaw.Headers);
         }
 
-        /// <summary>
-        /// De-serialize an object from JSON without a wrapper.
-        /// </summary>
         protected static BunqResponse<T> FromJson<T>(BunqResponseRaw responseRaw)
         {
             var responseItemObject = GetResponseItemObject(responseRaw);
@@ -151,25 +141,21 @@ namespace Bunq.Sdk.Model.Core
             {
                 var itemObject = item.ToObject<JObject>();
                 
-                // First try direct wrapper
                 var directWrapperJson = TryGetPropertyAsString(itemObject, wrapper);
                 
                 if (directWrapperJson != null)
                 {
-                    // Standard case
                     var itemValue = BunqJsonConvert.DeserializeObject<T>(directWrapperJson);
                     responseValue.Add(itemValue);
                     continue;
                 }
                 
-                // Look for dynamic subtypes
                 bool foundSubtype = false;
                 
                 foreach (var property in itemObject.Properties())
                 {
                     if (property.Name.StartsWith(wrapper, StringComparison.OrdinalIgnoreCase))
                     {
-                        // Found a subtype
                         var subtypeJson = property.Value.ToString();
                         var itemValue = BunqJsonConvert.DeserializeObject<T>(subtypeJson);
                         responseValue.Add(itemValue);
@@ -180,7 +166,6 @@ namespace Bunq.Sdk.Model.Core
                 
                 if (!foundSubtype)
                 {
-                    // Fallback - use the original method
                     var unwrappedItemJsonString = GetUnwrappedItemJsonString(itemObject, wrapper);
                     var itemValue = BunqJsonConvert.DeserializeObject<T>(unwrappedItemJsonString);
                     responseValue.Add(itemValue);
