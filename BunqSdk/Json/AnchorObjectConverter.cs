@@ -24,10 +24,9 @@ namespace Bunq.Sdk.Json
             object existingValue,
             JsonSerializer serializer
         ) {
-            // Load JSON into memory for processing
             JObject jsonObject = JObject.Load(reader);
 
-            // Create serializer settings that exclude IAnchorObjectInterface to prevent infinite recursion
+            // Create serializer settings that exclude IAnchorObjectInterface to prevent infinite recursion.
             var jsonSettings = new JsonSerializerSettings {
                 ContractResolver = new BunqContractResolver(new List<Type> { typeof(IAnchorObjectInterface) }),
                 DateFormatString = FORMAT_DATE,
@@ -36,10 +35,10 @@ namespace Bunq.Sdk.Json
                 NullValueHandling = NullValueHandling.Ignore,
             };
 
-            // Create empty instance of the target type
+            // Create empty instance of the target type.
             var instance = (IAnchorObjectInterface)Activator.CreateInstance(objectType);
 
-            // Strategy 1: Try mapping "object" container properties to target object properties
+            // Try mapping "object" container properties to target object properties.
             if (jsonObject.TryGetValue(OBJECT_KEY, out JToken objectToken) && objectToken is JObject objectContent) {
                 var properties = objectType.GetProperties();
 
@@ -62,13 +61,13 @@ namespace Bunq.Sdk.Json
                     }
                 }
 
-                // Return if we successfully populated at least one field
+                // Return if we successfully populated the model.
                 if (!((BunqModel)instance).IsAllFieldNull()) {
                     return instance;
                 }
             }
 
-            // Strategy 2: Try direct deserialization of the entire object
+            // Try direct deserialization of the entire object.
             try {
                 var model = JsonConvert.DeserializeObject(jsonObject.ToString(), objectType, jsonSettings);
 
@@ -76,10 +75,10 @@ namespace Bunq.Sdk.Json
                     return model;
                 }
             } catch (System.Exception) {
-                // If direct deserialization fails, continue to the field-by-field approach
+                // If direct deserialization fails, continue to the field-by-field approach.
             }
 
-            // Strategy 3: Try to deserialize the JSON into each complex property of the target object
+            // Attempt to populate model properties by deserializing the entire JSON into each BunqModel property.
             var allProperties = objectType.GetProperties()
                 .Where(p => typeof(BunqModel).IsAssignableFrom(p.PropertyType))
                 .ToList();
