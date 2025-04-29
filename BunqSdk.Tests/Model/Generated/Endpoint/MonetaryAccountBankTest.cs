@@ -26,14 +26,14 @@ namespace Bunq.Sdk.Tests.Model.Generated.Endpoint
             SetUpTestCase();
 
             var monetaryAccountToCloseId =
-                MonetaryAccountBank.Create(PaymentCurrency, MonetaryAccountDescription).Value;
+                MonetaryAccountBankApiObject.Create(PaymentCurrency, MonetaryAccountDescription).Value;
 
             DeleteMonetaryAccount(monetaryAccountToCloseId);
         }
 
         private static void DeleteMonetaryAccount(int idToClose)
         {
-            MonetaryAccountBank.Update(idToClose, status: Status, subStatus: SubStatus, reason: Reason,
+            MonetaryAccountBankApiObject.Update(idToClose, status: Status, subStatus: SubStatus, reason: Reason,
                 reasonDescription: ReasonDescription);
         }
     }

@@ -1,0 +1,317 @@
+using Bunq.Sdk.Context;
+using Bunq.Sdk.Http;
+using Bunq.Sdk.Json;
+using Bunq.Sdk.Model.Core;
+using Bunq.Sdk.Model.Generated.Object;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Text;
+using System;
+
+namespace Bunq.Sdk.Model.Generated.Endpoint
+{
+    /// <summary>
+    /// Used to show the MonetaryAccounts that you can access. Currently the only MonetaryAccount type is
+    /// MonetaryAccountBank. See also: monetary-account-bank.<br/><br/>Notification filters can be set on a monetary
+    /// account level to receive callbacks. For more information check the <a href="/api/2/page/callbacks">dedicated
+    /// callbacks page</a>.
+    /// </summary>
+    public class MonetaryAccountApiObject : BunqModel
+    {
+        /// <summary>
+        /// Endpoint constants.
+        /// </summary>
+        protected const string ENDPOINT_URL_READ = "user/{0}/monetary-account/{1}";
+        protected const string ENDPOINT_URL_LISTING = "user/{0}/monetary-account";
+    
+        /// <summary>
+        /// Object type.
+        /// </summary>
+        private const string OBJECT_TYPE_GET = "MonetaryAccount";
+    
+        /// <summary>
+        /// The aliases for the MonetaryAccount.
+        /// </summary>
+        [JsonProperty(PropertyName = "alias")]
+        public List<PointerObject> Alias { get; set; }
+        /// <summary>
+        /// The current available balance amount of the MonetaryAccount.
+        /// </summary>
+        [JsonProperty(PropertyName = "balance")]
+        public AmountObject Balance { get; set; }
+        /// <summary>
+        /// The profiles of the account.
+        /// </summary>
+        [JsonProperty(PropertyName = "monetary_account_profile")]
+        public MonetaryAccountProfileApiObject MonetaryAccountProfile { get; set; }
+        /// <summary>
+        /// The settings of the MonetaryAccount.
+        /// </summary>
+        [JsonProperty(PropertyName = "setting")]
+        public MonetaryAccountSettingObject Setting { get; set; }
+        /// <summary>
+        /// The budgets of the MonetaryAccount.
+        /// </summary>
+        [JsonProperty(PropertyName = "budget")]
+        public List<MonetaryAccountBudgetApiObject> Budget { get; set; }
+        /// <summary>
+        /// The reason for voluntarily cancelling (closing) the MonetaryAccount.
+        /// </summary>
+        [JsonProperty(PropertyName = "reason")]
+        public string Reason { get; set; }
+        /// <summary>
+        /// The optional free-form reason for voluntarily cancelling (closing) the MonetaryAccount. Can be any user
+        /// provided message.
+        /// </summary>
+        [JsonProperty(PropertyName = "reason_description")]
+        public string ReasonDescription { get; set; }
+        /// <summary>
+        /// The ShareInviteBankResponse when the MonetaryAccount is accessed by the User via a share/connect.
+        /// </summary>
+        [JsonProperty(PropertyName = "share")]
+        public ShareInviteMonetaryAccountResponseApiObject Share { get; set; }
+        /// <summary>
+        /// The ids of the AutoSave.
+        /// </summary>
+        [JsonProperty(PropertyName = "all_auto_save_id")]
+        public List<BunqIdObject> AllAutoSaveId { get; set; }
+        /// <summary>
+        /// The fulfillments for this MonetaryAccount.
+        /// </summary>
+        [JsonProperty(PropertyName = "fulfillments")]
+        public List<FulfillmentApiObject> Fulfillments { get; set; }
+        /// <summary>
+        /// The RelationUser when the MonetaryAccount is accessed by the User via a share/connect.
+        /// </summary>
+        [JsonProperty(PropertyName = "relation_user")]
+        public RelationUserApiObject RelationUser { get; set; }
+        /// <summary>
+        /// The users the account will be joint with.
+        /// </summary>
+        [JsonProperty(PropertyName = "all_co_owner")]
+        public List<CoOwnerObject> AllCoOwner { get; set; }
+        /// <summary>
+        /// The CoOwnerInvite when the MonetaryAccount is accessed by the User via a CoOwnerInvite.
+        /// </summary>
+        [JsonProperty(PropertyName = "co_owner_invite")]
+        public CoOwnerInviteResponseApiObject CoOwnerInvite { get; set; }
+        /// <summary>
+        /// The open banking account for information about the external account.
+        /// </summary>
+        [JsonProperty(PropertyName = "open_banking_account")]
+        public OpenBankingAccountApiObject OpenBankingAccount { get; set; }
+        /// <summary>
+        /// The Birdee investment portfolio.
+        /// </summary>
+        [JsonProperty(PropertyName = "birdee_investment_portfolio")]
+        public BirdeeInvestmentPortfolioApiObject BirdeeInvestmentPortfolio { get; set; }
+        /// <summary>
+        /// The access of this Monetary Account.
+        /// </summary>
+        [JsonProperty(PropertyName = "all_access")]
+        public List<MonetaryAccountAccessApiObject> AllAccess { get; set; }
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "MonetaryAccountLight")]
+        public MonetaryAccountLightApiObject MonetaryAccountLight { get; set; }
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "MonetaryAccountBank")]
+        public MonetaryAccountBankApiObject MonetaryAccountBank { get; set; }
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "MonetaryAccountExternal")]
+        public MonetaryAccountExternalApiObject MonetaryAccountExternal { get; set; }
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "MonetaryAccountInvestment")]
+        public MonetaryAccountInvestmentApiObject MonetaryAccountInvestment { get; set; }
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "MonetaryAccountJoint")]
+        public MonetaryAccountJointApiObject MonetaryAccountJoint { get; set; }
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "MonetaryAccountSavings")]
+        public MonetaryAccountSavingsApiObject MonetaryAccountSavings { get; set; }
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "MonetaryAccountSwitchService")]
+        public MonetaryAccountSwitchServiceApiObject MonetaryAccountSwitchService { get; set; }
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "MonetaryAccountExternalSavings")]
+        public MonetaryAccountExternalSavingsApiObject MonetaryAccountExternalSavings { get; set; }
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "MonetaryAccountCard")]
+        public MonetaryAccountCardApiObject MonetaryAccountCard { get; set; }
+    
+        /// <summary>
+        /// Get a specific MonetaryAccount.
+        /// </summary>
+        public static BunqResponse<MonetaryAccountApiObject> Get(int monetaryAccountId, IDictionary<string, string> customHeaders = null)
+        {
+            if (customHeaders == null) customHeaders = new Dictionary<string, string>();
+    
+            var apiClient = new ApiClient(GetApiContext());
+            var responseRaw = apiClient.Get(string.Format(ENDPOINT_URL_READ, DetermineUserId(), DetermineMonetaryAccountId(monetaryAccountId)), new Dictionary<string, string>(), customHeaders);
+    
+            return FromJson<MonetaryAccountApiObject>(responseRaw);
+        }
+    
+        /// <summary>
+        /// Get a collection of all your MonetaryAccounts.
+        /// </summary>
+        public static BunqResponse<List<MonetaryAccountApiObject>> List( IDictionary<string, string> urlParams = null, IDictionary<string, string> customHeaders = null)
+        {
+            if (urlParams == null) urlParams = new Dictionary<string, string>();
+            if (customHeaders == null) customHeaders = new Dictionary<string, string>();
+    
+            var apiClient = new ApiClient(GetApiContext());
+            var responseRaw = apiClient.Get(string.Format(ENDPOINT_URL_LISTING, DetermineUserId()), urlParams, customHeaders);
+    
+            return FromJsonList<MonetaryAccountApiObject>(responseRaw);
+        }
+    
+    
+        /// <summary>
+        /// </summary>
+        public override bool IsAllFieldNull()
+        {
+            if (this.Alias != null)
+            {
+                return false;
+            }
+    
+            if (this.Balance != null)
+            {
+                return false;
+            }
+    
+            if (this.MonetaryAccountProfile != null)
+            {
+                return false;
+            }
+    
+            if (this.Setting != null)
+            {
+                return false;
+            }
+    
+            if (this.Budget != null)
+            {
+                return false;
+            }
+    
+            if (this.Reason != null)
+            {
+                return false;
+            }
+    
+            if (this.ReasonDescription != null)
+            {
+                return false;
+            }
+    
+            if (this.Share != null)
+            {
+                return false;
+            }
+    
+            if (this.AllAutoSaveId != null)
+            {
+                return false;
+            }
+    
+            if (this.Fulfillments != null)
+            {
+                return false;
+            }
+    
+            if (this.RelationUser != null)
+            {
+                return false;
+            }
+    
+            if (this.AllCoOwner != null)
+            {
+                return false;
+            }
+    
+            if (this.CoOwnerInvite != null)
+            {
+                return false;
+            }
+    
+            if (this.OpenBankingAccount != null)
+            {
+                return false;
+            }
+    
+            if (this.BirdeeInvestmentPortfolio != null)
+            {
+                return false;
+            }
+    
+            if (this.AllAccess != null)
+            {
+                return false;
+            }
+    
+            if (this.MonetaryAccountLight != null)
+            {
+                return false;
+            }
+    
+            if (this.MonetaryAccountBank != null)
+            {
+                return false;
+            }
+    
+            if (this.MonetaryAccountExternal != null)
+            {
+                return false;
+            }
+    
+            if (this.MonetaryAccountInvestment != null)
+            {
+                return false;
+            }
+    
+            if (this.MonetaryAccountJoint != null)
+            {
+                return false;
+            }
+    
+            if (this.MonetaryAccountSavings != null)
+            {
+                return false;
+            }
+    
+            if (this.MonetaryAccountSwitchService != null)
+            {
+                return false;
+            }
+    
+            if (this.MonetaryAccountExternalSavings != null)
+            {
+                return false;
+            }
+    
+            if (this.MonetaryAccountCard != null)
+            {
+                return false;
+            }
+    
+            return true;
+        }
+    
+        /// <summary>
+        /// </summary>
+        public static MonetaryAccountApiObject CreateFromJsonString(string json)
+        {
+            return BunqModel.CreateFromJsonString<MonetaryAccountApiObject>(json);
+        }
+    }
+}

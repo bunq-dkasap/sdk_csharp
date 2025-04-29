@@ -8,7 +8,7 @@ using Bunq.Sdk.Model.Generated.Object;
 
 namespace Bunq.Sdk.Model.Core
 {
-    public class NotificationFilterUrlMonetaryAccountInternal : NotificationFilterUrlMonetaryAccount
+    public class NotificationFilterUrlMonetaryAccountInternal : NotificationFilterUrlMonetaryAccountApiObject
     {
         /// <summary>
         /// Field constants.
@@ -18,17 +18,17 @@ namespace Bunq.Sdk.Model.Core
         /// <summary>
         /// Create notification filters with list response type.
         /// </summary>
-        public static BunqResponse<List<NotificationFilterUrl>> CreateWithListResponse()
+        public static BunqResponse<List<NotificationFilterUrlObject>> CreateWithListResponse()
         {
-            return CreateWithListResponse(null, new List<NotificationFilterUrl>(), null);
+            return CreateWithListResponse(null, new List<NotificationFilterUrlObject>(), null);
         }
 
         /// <summary>
         /// Create notification filters with list response type.
         /// </summary>
-        public static BunqResponse<List<NotificationFilterUrl>> CreateWithListResponse(
+        public static BunqResponse<List<NotificationFilterUrlObject>> CreateWithListResponse(
             int monetaryAccountId,
-            List<NotificationFilterUrl> allNotificationFilter
+            List<NotificationFilterUrlObject> allNotificationFilter
         )
         {
             return CreateWithListResponse(monetaryAccountId, allNotificationFilter, null);
@@ -37,9 +37,9 @@ namespace Bunq.Sdk.Model.Core
         /// <summary>
         /// Create notification filters with list response type.
         /// </summary>
-        public static BunqResponse<List<NotificationFilterUrl>> CreateWithListResponse(
+        public static BunqResponse<List<NotificationFilterUrlObject>> CreateWithListResponse(
             int? monetaryAccountId,
-            List<NotificationFilterUrl> allNotificationFilter,
+            List<NotificationFilterUrlObject> allNotificationFilter,
             Dictionary<string, string> customHeaders
         )
         {
@@ -59,7 +59,7 @@ namespace Bunq.Sdk.Model.Core
                     string.Format(ENDPOINT_URL_CREATE, DetermineUserId(),
                         DetermineMonetaryAccountId(monetaryAccountId)), requestBytes, customHeaders);
 
-            return FromJsonList<NotificationFilterUrl>(responseRaw, OBJECT_TYPE_GET);
+            return FromJsonList<NotificationFilterUrlObject>(responseRaw, OBJECT_TYPE_GET);
         }
     }
 }

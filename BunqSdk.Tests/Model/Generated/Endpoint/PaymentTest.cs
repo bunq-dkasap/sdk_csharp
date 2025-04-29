@@ -21,7 +21,7 @@ namespace Bunq.Sdk.Tests.Model.Generated.Endpoint
         {
             SetUpTestCase();
 
-            Payment.Create(new Amount(PaymentAmountEur, PaymentCurrency), GetPointerBravo(), PaymentDescription);
+            PaymentApiObject.Create(new AmountObject(PaymentAmountEur, PaymentCurrency), GetPointerBravo(), PaymentDescription);
         }
 
         /// <summary>
@@ -34,8 +34,8 @@ namespace Bunq.Sdk.Tests.Model.Generated.Endpoint
         {
             SetUpTestCase();
 
-            Payment.Create(
-                new Amount(PaymentAmountEur, PaymentCurrency),
+            PaymentApiObject.Create(
+                new AmountObject(PaymentAmountEur, PaymentCurrency),
                 SecondMonetaryAccountBank.Alias.First(),
                 PaymentDescription
             );

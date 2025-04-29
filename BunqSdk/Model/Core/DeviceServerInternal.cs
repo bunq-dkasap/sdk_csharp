@@ -7,7 +7,7 @@ using Bunq.Sdk.Model.Generated.Endpoint;
 
 namespace Bunq.Sdk.Model.Core
 {
-    public class DeviceServerInternal : DeviceServer
+    public class DeviceServerInternal : DeviceServerApiObject
     {
         /// <summary>
         /// Create a new DeviceServer providing the installation token in the header and signing the request with the

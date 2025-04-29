@@ -56,7 +56,7 @@ namespace Bunq.Sdk.Tests.Model.Generated.Object
             Type subClassTypeExpected = null)
         {
             var jsonString = ReadJsonFromFile(expectedJsonFileName);
-            var notificationUrl = NotificationUrl.CreateFromJsonString(jsonString);
+            var notificationUrl = NotificationUrlObject.CreateFromJsonString(jsonString);
 
             Assert.NotNull(notificationUrl);
             Assert.NotNull(notificationUrl.Object);
@@ -95,7 +95,7 @@ namespace Bunq.Sdk.Tests.Model.Generated.Object
         {
             ExecuteNotificationUrlTest(
                 JsonPathMutationModel,
-                typeof(Payment),
+                typeof(PaymentApiObject),
                 GetPayment
             );
         }
@@ -105,7 +105,7 @@ namespace Bunq.Sdk.Tests.Model.Generated.Object
         {
             ExecuteNotificationUrlTest(
                 JsonPathBunqMeTabModel,
-                typeof(BunqMeTab),
+                typeof(BunqMeTabApiObject),
                 GetBunqMeTab
             );
         }
@@ -115,7 +115,7 @@ namespace Bunq.Sdk.Tests.Model.Generated.Object
         {
             ExecuteNotificationUrlTest(
                 JsonPathDraftPaymentModel,
-                typeof(DraftPayment),
+                typeof(DraftPaymentApiObject),
                 GetDraftPayment
             );
         }
@@ -125,7 +125,7 @@ namespace Bunq.Sdk.Tests.Model.Generated.Object
         {
             ExecuteNotificationUrlTest(
                 JsonPathMasterCardActionModel,
-                typeof(MasterCardAction),
+                typeof(MasterCardActionApiObject),
                 GetMasterCardAction
             );
         }
@@ -135,10 +135,10 @@ namespace Bunq.Sdk.Tests.Model.Generated.Object
         {
             ExecuteNotificationUrlTest(
                 JsonPathMonetaryAccountBankModel,
-                typeof(MonetaryAccount),
+                typeof(MonetaryAccountApiObject),
                 GetMonetaryAccount,
                 GetMonetaryAccountBank,
-                typeof(MonetaryAccountBank)
+                typeof(MonetaryAccountBankApiObject)
             );
         }
 
@@ -147,7 +147,7 @@ namespace Bunq.Sdk.Tests.Model.Generated.Object
         {
             ExecuteNotificationUrlTest(
                 JsonPathPaymentBatchModel,
-                typeof(PaymentBatch),
+                typeof(PaymentBatchApiObject),
                 GetPaymentBatch
             );
         }
@@ -157,7 +157,7 @@ namespace Bunq.Sdk.Tests.Model.Generated.Object
         {
             ExecuteNotificationUrlTest(
                 JsonPathRequestInquiryModel,
-                typeof(RequestInquiry),
+                typeof(RequestInquiryApiObject),
                 GetRequestInquiry
             );
         }
@@ -167,7 +167,7 @@ namespace Bunq.Sdk.Tests.Model.Generated.Object
         {
             ExecuteNotificationUrlTest(
                 JsonPathRequestResponseModel,
-                typeof(RequestResponse),
+                typeof(RequestResponseApiObject),
                 GetRequestResponse
             );
         }
@@ -177,7 +177,7 @@ namespace Bunq.Sdk.Tests.Model.Generated.Object
         {
             ExecuteNotificationUrlTest(
                 JsonPathScheduleInstanceModel,
-                typeof(ScheduleInstance),
+                typeof(ScheduleInstanceApiObject),
                 GetScheduleInstance
             );
         }
@@ -187,7 +187,7 @@ namespace Bunq.Sdk.Tests.Model.Generated.Object
         {
             ExecuteNotificationUrlTest(
                 JsonPathSchedulePaymentModel,
-                typeof(SchedulePayment),
+                typeof(SchedulePaymentApiObject),
                 GetSchedulePayment
             );
         }
@@ -197,7 +197,7 @@ namespace Bunq.Sdk.Tests.Model.Generated.Object
         {
             ExecuteNotificationUrlTest(
                 JsonPathShareInviteBankInquiryModel,
-                typeof(ShareInviteMonetaryAccountInquiry),
+                typeof(ShareInviteMonetaryAccountInquiryApiObject),
                 GetShareInviteBankInquiry
             );
         }
@@ -207,7 +207,7 @@ namespace Bunq.Sdk.Tests.Model.Generated.Object
         {
             ExecuteNotificationUrlTest(
                 JsonPathShareInviteBankResponseModel,
-                typeof(ShareInviteMonetaryAccountResponse),
+                typeof(ShareInviteMonetaryAccountResponseApiObject),
                 GetShareInviteBankResponse
             );
         }

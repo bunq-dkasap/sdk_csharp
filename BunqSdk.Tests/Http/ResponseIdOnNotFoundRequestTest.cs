@@ -12,7 +12,7 @@ namespace Bunq.Sdk.Tests.Http
             SetUpTestCase();
 
             var caughtException = Assert.Throws<NotFoundException>(
-                () => Payment.Get(0)
+                () => PaymentApiObject.Get(0)
             );
 
             Assert.NotNull(caughtException.ResponseId);

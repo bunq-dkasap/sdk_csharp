@@ -29,9 +29,9 @@ namespace Bunq.Sdk.Tests.Model.Generated.Endpoint
                 {ApiClient.HEADER_ATTACHMENT_DESCRIPTION, AttachmentDescription}
             };
 
-            var attachmentUuid = AttachmentPublic.Create(fileContentBytes, customHeaders).Value;
-            var responseBytes = AttachmentPublicContent.List(attachmentUuid).Value;
-
+            var attachmentUuid = AttachmentPublicApiObject.Create(fileContentBytes, customHeaders).Value;
+            var responseBytes = AttachmentPublicContentApiObject.List(attachmentUuid).Value;
+            
             Assert.Equal(fileContentBytes, responseBytes);
         }
     }

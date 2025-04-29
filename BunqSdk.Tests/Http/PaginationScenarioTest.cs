@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using Bunq.Sdk.Http;
 using Bunq.Sdk.Json;
 using Bunq.Sdk.Model.Generated.Endpoint;
@@ -26,19 +27,24 @@ namespace Bunq.Sdk.Tests.Http
             SetUpTestCase();
 
             EnsureEnoughPayments();
-            var paymentsExpected = new List<Payment>(GetPaymentsRequired());
+            var paymentsExpected = new List<PaymentApiObject>(GetPaymentsRequired());
             var paginationCountOnly = new Pagination
             {
                 Count = PaymentListingPageSize
             };
-
+            
+            Thread.Sleep(1000); // Ensure request won't get rate limited.
             var responseLatest = ListPayments(paginationCountOnly.UrlParamsCountOnly);
+            
+            Thread.Sleep(1000); // Ensure request won't get rate limited.
             var paginationLatest = responseLatest.Pagination;
             var responsePrevious = ListPayments(paginationLatest.UrlParamsPreviousPage);
+            
+            Thread.Sleep(1000); // Ensure request won't get rate limited.
             var paginationPrevious = responsePrevious.Pagination;
             var responsePreviousNext = ListPayments(paginationPrevious.UrlParamsNextPage);
 
-            var paymentsActual = new List<Payment>();
+            var paymentsActual = new List<PaymentApiObject>();
             paymentsActual.AddRange(responsePreviousNext.Value);
             paymentsActual.AddRange(responsePrevious.Value);
             var paymentsExpectedSerialized = BunqJsonConvert.SerializeObject(paymentsExpected);
@@ -51,6 +57,7 @@ namespace Bunq.Sdk.Tests.Http
         {
             for (var i = NumberZero; i < GetPaymentsMissingCount(); ++i)
             {
+                Thread.Sleep(1000); // Time out to prevent rate limiting.
                 CreatePayment();
             }
         }
@@ -60,7 +67,7 @@ namespace Bunq.Sdk.Tests.Http
             return PaymentRequiredCountMinimum - GetPaymentsRequired().Count;
         }
 
-        private static IList<Payment> GetPaymentsRequired()
+        private static IList<PaymentApiObject> GetPaymentsRequired()
         {
             var pagination = new Pagination
             {
@@ -70,14 +77,14 @@ namespace Bunq.Sdk.Tests.Http
             return ListPayments(pagination.UrlParamsCountOnly).Value;
         }
 
-        private static BunqResponse<List<Payment>> ListPayments(IDictionary<string, string> urlParams)
+        private static BunqResponse<List<PaymentApiObject>> ListPayments(IDictionary<string, string> urlParams)
         {
-            return Payment.List(urlParams: urlParams);
+            return PaymentApiObject.List(urlParams: urlParams);
         }
 
         private static void CreatePayment()
         {
-            Payment.Create(new Amount(PaymentAmountEur, PaymentCurrency), GetPointerBravo(), PaymentDescription);
+            PaymentApiObject.Create(new AmountObject(PaymentAmountEur, PaymentCurrency), GetPointerBravo(), PaymentDescription);
         }
     }
 }

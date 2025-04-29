@@ -30,7 +30,15 @@ namespace Bunq.Sdk.Json
         {
             JObject jsonObject = JObject.Load(reader);
 
-            BunqMeTabResultInquiry tabResultInquiry = JsonConvert.DeserializeObject<BunqMeTabResultInquiry>(
+            if (!jsonObject.TryGetValue(FIELD_PAYMENT, out JToken _)) {
+                return JsonConvert.DeserializeObject(
+                    jsonObject.ToString(),
+                    objectType,
+                    GetSerializerSettingsWithoutTabResultInquiryResolver()
+                );
+            }
+
+            BunqMeTabResultInquiryApiObject tabResultInquiry = JsonConvert.DeserializeObject<BunqMeTabResultInquiryApiObject>(
                 jsonObject.ToString(),
                 GetSerializerSettingsWithoutTabResultInquiryResolver()
             );
@@ -38,7 +46,7 @@ namespace Bunq.Sdk.Json
             JObject paymentJsonObjectWrapped = (JObject) jsonObject.GetValue(FIELD_PAYMENT);
             JObject paymentJsonObject = (JObject) paymentJsonObjectWrapped.GetValue(OBJECT_TYPE_PAYMENT);
 
-            Payment paymentObject = Payment.CreateFromJsonString(paymentJsonObject.ToString());
+            PaymentApiObject paymentObject = PaymentApiObject.CreateFromJsonString(paymentJsonObject.ToString());
             tabResultInquiry.Payment = paymentObject;
 
             return tabResultInquiry;
@@ -46,7 +54,7 @@ namespace Bunq.Sdk.Json
 
         public override bool CanConvert(Type objectType)
         {
-            return typeof(IAnchorObjectInterface).GetTypeInfo().IsAssignableFrom(objectType);
+            return typeof(BunqMeTabResultInquiryApiObject) == objectType;
         }
 
         private JsonSerializerSettings GetSerializerSettingsWithoutTabResultInquiryResolver()

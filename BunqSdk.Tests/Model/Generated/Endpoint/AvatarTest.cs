@@ -29,13 +29,13 @@ namespace Bunq.Sdk.Tests.Model.Generated.Endpoint
 
             var avatarMap = new Dictionary<string, object>
             {
-                {Avatar.FIELD_ATTACHMENT_PUBLIC_UUID, attachmentUuid}
+                {AvatarApiObject.FIELD_ATTACHMENT_PUBLIC_UUID, attachmentUuid}
             };
-            var avatarUuid = Avatar.Create(attachmentUuid).Value;
+            var avatarUuid = AvatarApiObject.Create(attachmentUuid).Value;
 
-            var attachmentUuidFromAvatar = Avatar.Get(avatarUuid).Value
+            var attachmentUuidFromAvatar = AvatarApiObject.Get(avatarUuid).Value
                 .Image.First().AttachmentPublicUuid;
-            var receivedFileContentByte = AttachmentPublicContent.List(attachmentUuidFromAvatar).Value;
+            var receivedFileContentByte = AttachmentPublicContentApiObject.List(attachmentUuidFromAvatar).Value;
 
             Assert.Equal(attachmentUuid, attachmentUuidFromAvatar);
             Assert.Equal(fileContentByte, receivedFileContentByte);
@@ -49,7 +49,7 @@ namespace Bunq.Sdk.Tests.Model.Generated.Endpoint
                 {ApiClient.HEADER_CONTENT_TYPE, ContentType},
             };
 
-            return AttachmentPublic.Create(fileContentByte, customHeaders).Value;
+            return AttachmentPublicApiObject.Create(fileContentByte, customHeaders).Value;
         }
     }
 }
