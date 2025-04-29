@@ -19,13 +19,15 @@ namespace Bunq.Sdk.Json
         }
 
         public override object ReadJson(
-            JsonReader reader, 
-            Type objectType, 
+            JsonReader reader,
+            Type objectType,
             object existingValue,
             JsonSerializer serializer
         ) {
+            // Load JSON into memory for processing
             JObject jsonObject = JObject.Load(reader);
 
+            // Create serializer settings that exclude IAnchorObjectInterface to prevent infinite recursion
             var jsonSettings = new JsonSerializerSettings {
                 ContractResolver = new BunqContractResolver(new List<Type> { typeof(IAnchorObjectInterface) }),
                 DateFormatString = FORMAT_DATE,
@@ -34,8 +36,10 @@ namespace Bunq.Sdk.Json
                 NullValueHandling = NullValueHandling.Ignore,
             };
 
+            // Create empty instance of the target type
             var instance = (IAnchorObjectInterface)Activator.CreateInstance(objectType);
 
+            // Strategy 1: Try mapping "object" container properties to target object properties
             if (jsonObject.TryGetValue(OBJECT_KEY, out JToken objectToken) && objectToken is JObject objectContent) {
                 var properties = objectType.GetProperties();
 
@@ -58,14 +62,16 @@ namespace Bunq.Sdk.Json
                     }
                 }
 
+                // Return if we successfully populated at least one field
                 if (!((BunqModel)instance).IsAllFieldNull()) {
                     return instance;
                 }
             }
 
+            // Strategy 2: Try direct deserialization of the entire object
             try {
                 var model = JsonConvert.DeserializeObject(jsonObject.ToString(), objectType, jsonSettings);
-                
+
                 if (!((BunqModel)model).IsAllFieldNull()) {
                     return model;
                 }
@@ -73,22 +79,19 @@ namespace Bunq.Sdk.Json
                 // If direct deserialization fails, continue to the field-by-field approach
             }
 
+            // Strategy 3: Try to deserialize the JSON into each complex property of the target object
             var allProperties = objectType.GetProperties()
                 .Where(p => typeof(BunqModel).IsAssignableFrom(p.PropertyType))
                 .ToList();
 
             foreach (var property in allProperties) {
-                try {
-                    var propertyValue = JsonConvert.DeserializeObject(
-                        jsonObject.ToString(),
-                        property.PropertyType,
-                        jsonSettings);
+                var propertyValue = JsonConvert.DeserializeObject(
+                    jsonObject.ToString(),
+                    property.PropertyType,
+                    jsonSettings);
 
-                    if (propertyValue != null && !((BunqModel)propertyValue).IsAllFieldNull()) {
-                        property.SetValue(instance, propertyValue);
-                    }
-                } catch (System.Exception) {
-                    // Continue with next property if this one fails
+                if (propertyValue != null && !((BunqModel)propertyValue).IsAllFieldNull()) {
+                    property.SetValue(instance, propertyValue);
                 }
             }
 
