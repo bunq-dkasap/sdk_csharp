@@ -1,0 +1,5 @@
+/Users/dkasap/dev_docker/data/sdk_csharp/BunqSdk/obj/Debug/netstandard2.0/BunqSdk.csproj.AssemblyReference.cache
+/Users/dkasap/dev_docker/data/sdk_csharp/BunqSdk/obj/Debug/netstandard2.0/BunqSdk.GeneratedMSBuildEditorConfig.editorconfig
+/Users/dkasap/dev_docker/data/sdk_csharp/BunqSdk/obj/Debug/netstandard2.0/BunqSdk.AssemblyInfoInputs.cache
+/Users/dkasap/dev_docker/data/sdk_csharp/BunqSdk/obj/Debug/netstandard2.0/BunqSdk.AssemblyInfo.cs
+/Users/dkasap/dev_docker/data/sdk_csharp/BunqSdk/obj/Debug/netstandard2.0/BunqSdk.csproj.CoreCompileInputs.cache

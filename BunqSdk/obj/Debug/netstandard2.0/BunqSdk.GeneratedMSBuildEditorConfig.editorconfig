@@ -1,0 +1,8 @@
+is_global = true
+build_property.RootNamespace = Bunq.Sdk
+build_property.ProjectDir = /Users/dkasap/dev_docker/data/sdk_csharp/BunqSdk/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.CsWinRTUseWindowsUIXamlProjections = false
+build_property.EffectiveAnalysisLevelStyle = 
+build_property.EnableCodeStyleSeverity = 
