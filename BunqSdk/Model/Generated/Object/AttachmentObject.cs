@@ -1,0 +1,57 @@
+using Bunq.Sdk.Model.Core;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+
+namespace Bunq.Sdk.Model.Generated.Object
+{
+    /// <summary>
+    /// </summary>
+    public class AttachmentObject : BunqModel
+    {
+        /// <summary>
+        /// The description of the attachment.
+        /// </summary>
+        [JsonProperty(PropertyName = "description")]
+        public string Description { get; set; }
+        /// <summary>
+        /// The content type of the attachment's file.
+        /// </summary>
+        [JsonProperty(PropertyName = "content_type")]
+        public string ContentType { get; set; }
+        /// <summary>
+        /// The URLs where the file can be downloaded.
+        /// </summary>
+        [JsonProperty(PropertyName = "urls")]
+        public List<AttachmentUrlObject> Urls { get; set; }
+    
+    
+        /// <summary>
+        /// </summary>
+        public override bool IsAllFieldNull()
+        {
+            if (this.Description != null)
+            {
+                return false;
+            }
+    
+            if (this.ContentType != null)
+            {
+                return false;
+            }
+    
+            if (this.Urls != null)
+            {
+                return false;
+            }
+    
+            return true;
+        }
+    
+        /// <summary>
+        /// </summary>
+        public static AttachmentObject CreateFromJsonString(string json)
+        {
+            return BunqModel.CreateFromJsonString<AttachmentObject>(json);
+        }
+    }
+}

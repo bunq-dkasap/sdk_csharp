@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net9.0</TargetFrameworks>
+    <LangVersion>default</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyName>Bunq.Sdk</AssemblyName>
+    <PackageId>Bunq.Sdk</PackageId>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VersionPrefix>1.14.18</VersionPrefix>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>Bunq.Sdk</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Authors>bunq</Authors>
+    <Company>bunq</Company>
+    <RepositoryUrl>https://github.com/bunq/sdk_csharp</RepositoryUrl>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <AssemblyTitle>bunq SDK</AssemblyTitle>
+    <Copyright>bunq 2020</Copyright>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Collections.Immutable" Version="1.4.0" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,74 @@
+using Bunq.Sdk.Model.Core;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+
+namespace Bunq.Sdk.Model.Generated.Object
+{
+    /// <summary>
+    /// </summary>
+    public class MonetaryAccountProfileFillObject : BunqModel
+    {
+        /// <summary>
+        /// The status of the profile.
+        /// </summary>
+        [JsonProperty(PropertyName = "status")]
+        public string Status { get; set; }
+        /// <summary>
+        /// The goal balance.
+        /// </summary>
+        [JsonProperty(PropertyName = "balance_preferred")]
+        public AmountObject BalancePreferred { get; set; }
+        /// <summary>
+        /// The low threshold balance.
+        /// </summary>
+        [JsonProperty(PropertyName = "balance_threshold_low")]
+        public AmountObject BalanceThresholdLow { get; set; }
+        /// <summary>
+        /// The bank the fill is supposed to happen from, with BIC and bank name.
+        /// </summary>
+        [JsonProperty(PropertyName = "issuer")]
+        public IssuerObject Issuer { get; set; }
+    
+        public MonetaryAccountProfileFillObject(string status, AmountObject balancePreferred, AmountObject balanceThresholdLow)
+        {
+            Status = status;
+            BalancePreferred = balancePreferred;
+            BalanceThresholdLow = balanceThresholdLow;
+        }
+    
+    
+        /// <summary>
+        /// </summary>
+        public override bool IsAllFieldNull()
+        {
+            if (this.Status != null)
+            {
+                return false;
+            }
+    
+            if (this.BalancePreferred != null)
+            {
+                return false;
+            }
+    
+            if (this.BalanceThresholdLow != null)
+            {
+                return false;
+            }
+    
+            if (this.Issuer != null)
+            {
+                return false;
+            }
+    
+            return true;
+        }
+    
+        /// <summary>
+        /// </summary>
+        public static MonetaryAccountProfileFillObject CreateFromJsonString(string json)
+        {
+            return BunqModel.CreateFromJsonString<MonetaryAccountProfileFillObject>(json);
+        }
+    }
+}

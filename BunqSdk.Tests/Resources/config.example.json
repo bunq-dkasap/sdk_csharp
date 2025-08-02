@@ -1,0 +1,20 @@
+{
+    "API_KEY": "<API KEY>",
+    "USER_ID": "XXXX",
+    "MONETARY_ACCOUNT_ID": "XXXX",
+    "MONETARY_ACCOUNT_ID2": "XXXX",
+    "PERMITTED_IPS": "<ip address>,<another ip address>",
+    "AttachmentPublicTest": {
+        "CONTENT_TYPE": "image/png",
+        "DESCRIPTION": "TEST PNG PHP",
+        "PATH_IN": "/vader.png"
+    },
+    "CounterPartySelf": {
+        "Alias": "<Email address>",
+        "Type": "EMAIL"
+    },
+    "CounterPartyOther": {
+        "Alias": "<Email address>",
+        "Type": "EMAIL"
+    }
+}
